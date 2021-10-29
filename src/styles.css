@@ -26,6 +26,23 @@ main {
   text-align: center;
 }
 
+#msgArea {
+  text-align: center;
+  display: flex;
+  width: 60%;
+  height: 50px;
+  margin: 10px auto;
+  backdrop-filter: blur(3px);
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.5);
+}
+
+#defaultMsg {
+  /* background-color: red; */
+  margin: 0 auto;
+  font-size: 32px;
+  color: #ffffff;
+}
+
 #register {
   /* background-color: green; */
   display: flex;
@@ -66,6 +83,10 @@ main {
 #lists {
   margin-top: 30px;
   /* background-color: red; */
+}
+
+#defaultMessage {
+  margin: 0 auto;
 }
 
 .itemWrap {
