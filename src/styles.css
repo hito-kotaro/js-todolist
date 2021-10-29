@@ -20,63 +20,70 @@ h1 {
 main {
   width: 80%;
   min-height: 300px;
+
   margin: 0 auto;
   /* background-color: yellow; */
   text-align: center;
 }
 
-/* Todo追加フォーム */
-.register {
-  /* background-color: red; */
-  margin-top: 30px;
+#register {
+  /* background-color: green; */
+  display: flex;
+  width: 60%;
+  height: 50px;
+  margin: 10px auto;
+  backdrop-filter: blur(3px);
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.5);
 }
 
 #regBtn {
-  /* margin-left: auto; */
-  /* margin-right: 0; */
-  height: 50px;
-  min-width: 100px;
+  font-size: 32px;
   color: #ffffff;
-  font-size: 24px;
   background: transparent;
-  border: solid 3px #ffffff;
-  display: inline-block;
-  border-radius: 5px;
-  cursor: pointer;
+  border: none;
 }
 
 #todo {
-  font-size: 32px;
+  width: 70%;
+  overflow: hidden;
+  font-size: 24px;
   color: #ffffff;
-  height: 30px;
-  width: 60%;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  margin-bottom: 5px;
+  margin-left: 15px;
   background-color: transparent;
-  cursor: pointer;
   border: none;
   border-bottom: solid 3px #ffffff;
-  margin-left: 20px;
 }
 
 #todo:focus {
   outline: none;
 }
 
-/* Todo表示箇所 */
+/* Todoè¡¨ç¤ºç®‡æ‰€ */
+#lists {
+  margin-top: 30px;
+  /* background-color: red; */
+}
 
 .itemWrap {
-  border: solid 3px #ffffff;
+  /* border: solid 1px #000000; */
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.5);
   padding: 10px;
   width: 60%;
   margin: 10px auto;
   height: 50px;
+  backdrop-filter: blur(3px);
   /* background-color: green; */
 }
 
-#lists {
-  margin-top: 30px;
-}
-
-.register {
+.item {
+  /* background-color: blueviolet; */
+  /* background-color: #000000; */
+  display: flex;
+  height: 100%;
 }
 
 .todoTitle {
@@ -95,24 +102,18 @@ main {
   /* margin-left: auto; */
   /* margin-right: 0; */
   width: 20%;
-  min-width: 100px;
+  /* min-width: 100px; */
   color: #ffffff;
-  font-size: 24px;
+  font-size: 32px;
   background: transparent;
-  border: solid 3px #ffffff;
+  /* border: solid 3px #ffffff; */
   /* padding: 10px 30px; */
   display: inline-block;
   border-radius: 5px;
-  /* border: none; */
+  border: none;
   cursor: pointer;
 }
 
-.item {
-  /* background-color: red; */
-  /* background-color: #000000; */
-  display: flex;
-  height: 100%;
-}
 /* 
 .item > button {
   margin-right: 0;

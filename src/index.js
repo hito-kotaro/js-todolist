@@ -24,9 +24,8 @@ button.addEventListener("click", () => {
   itemWrap.className = "itemWrap";
   item.className = "item";
   todoTitle.className = "todoTitle"; //追加する要素にitemというclassをつける
-  doneBtn.className = "doneBtn";
+  doneBtn.className = "doneBtn fas fa-check";
 
-  doneBtn.innerHTML = "完了";
   doneBtn.addEventListener("click", (e) => {
     e.preventDefault();
     delTasks(doneBtn);

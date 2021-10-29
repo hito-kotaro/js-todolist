@@ -3,6 +3,10 @@
   <head>
     <title>TodoList</title>
     <meta charset="UTF-8" />
+    <script
+      src="https://kit.fontawesome.com/a90cbe118f.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -14,15 +18,16 @@
     </header>
 
     <main>
-      <div class="register">
-        <input id="regBtn" type="button" value="Todoを追加" />
+      <div id="register">
+        <!-- <input id="regBtn" type="button" value="Todoを追加" /> -->
+        <button id="regBtn" class="fas fa-plus"></button>
         <input id="todo" type="text" placeholder="" />
       </div>
 
       <div id="lists">
         <div class="itemWrap">
           <div class="item">
-            <button class="doneBtn">完了</button>
+            <button class="doneBtn fas fa-check"></button>
             <div class="todoTitle">
               Sample
             </div>
