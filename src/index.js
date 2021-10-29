@@ -2,9 +2,27 @@ import "./styles.css";
 
 const button = document.getElementById("regBtn");
 const todoList = document.getElementById("lists");
+const defaultMsg = document.getElementById("defaultMsg");
+const msgArea = document.getElementById("msgArea");
+
+// console.log(defaultMsg);
+
+const toggleDefaultMsg = (todos) => {
+  if (todos === 0) {
+    defaultMsg.style.display = "";
+    msgArea.style.display = "";
+    console.log("zero");
+  } else {
+    defaultMsg.style.display = "none";
+    msgArea.style.display = "none";
+    console.log("no zero");
+  }
+};
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
+  // ここでチェック
+
   //追加するtodoをテキストボックスから取得
   const todo = document.getElementById("todo");
 
@@ -29,6 +47,7 @@ button.addEventListener("click", () => {
   doneBtn.addEventListener("click", (e) => {
     e.preventDefault();
     delTasks(doneBtn);
+    toggleDefaultMsg(todoList.childElementCount);
   });
 
   //削除機能を実装
@@ -48,4 +67,5 @@ button.addEventListener("click", () => {
   todoList.appendChild(itemWrap);
 
   todo.value = ""; //テキストボックスを空にする
+  toggleDefaultMsg(todoList.childElementCount);
 });
