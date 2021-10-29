@@ -1,12 +1,12 @@
 import "./styles.css";
 
+//必要な要素を取得
 const button = document.getElementById("regBtn");
 const todoList = document.getElementById("lists");
 const defaultMsg = document.getElementById("defaultMsg");
 const msgArea = document.getElementById("msgArea");
 
-// console.log(defaultMsg);
-
+//todoの数が0のとき登録を促すメッセージを表示する
 const toggleDefaultMsg = (todos) => {
   if (todos === 0) {
     defaultMsg.style.display = "";
@@ -21,9 +21,6 @@ const toggleDefaultMsg = (todos) => {
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
-  // ここでチェック
-
-  //追加するtodoをテキストボックスから取得
   const todo = document.getElementById("todo");
 
   //テキストボックスに何も入っていない状態で追加ボタンが押されたらアラートを表示して追加しない
@@ -41,16 +38,17 @@ button.addEventListener("click", () => {
   //css用にクラスを設定
   itemWrap.className = "itemWrap";
   item.className = "item";
-  todoTitle.className = "todoTitle"; //追加する要素にitemというclassをつける
+  todoTitle.className = "todoTitle";
   doneBtn.className = "doneBtn fas fa-check";
 
+  //完了ボタンのイベントリスナー
   doneBtn.addEventListener("click", (e) => {
     e.preventDefault();
     delTasks(doneBtn);
     toggleDefaultMsg(todoList.childElementCount);
   });
 
-  //削除機能を実装
+  //todoの削除関数(完了ボタンで発火)
   const delTasks = (doneBtn) => {
     const chosenTask = doneBtn.closest(".itemWrap");
     console.log(chosenTask);
@@ -58,14 +56,11 @@ button.addEventListener("click", () => {
   };
 
   //htmlに追加
-  todoTitle.innerHTML = todo.value; //追加する要素の中にテキストボックスから取得した値を入れる
-
-  item.appendChild(doneBtn); //削除ボタンを追加
-  item.appendChild(todoTitle); //要素を追加
-
+  todoTitle.innerHTML = todo.value;
+  item.appendChild(doneBtn);
+  item.appendChild(todoTitle);
   itemWrap.appendChild(item);
   todoList.appendChild(itemWrap);
-
   todo.value = ""; //テキストボックスを空にする
   toggleDefaultMsg(todoList.childElementCount);
 });
