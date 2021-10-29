@@ -1,2 +1,2 @@
-# js-todolist
+# rt-todolist
 Created with CodeSandbox
