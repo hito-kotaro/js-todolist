@@ -5,16 +5,7 @@ const button = document.getElementById("regBtn");
 const todoList = document.getElementById("lists");
 const defaultMsg = document.getElementById("defaultMsg");
 const msgArea = document.getElementById("msgArea");
-const idPrefix = "todo_";
-let todoId = 0;
-const storage = [];
-// localStorage.clear();
-//localstrageのデータを読み込む
-for (let i = 0; i < localStorage.length; i++) {
-  let key = localStorage.key(i);
-  storage[i] = localStorage.getItem(key);
-  console.log(key + "/" + storage[key]);
-}
+const textBox = document.getElementById("todo");
 
 console.log("===========================================");
 
@@ -42,7 +33,7 @@ const doneTasks = (doneBtn) => {
 };
 
 //todoの追加
-const regTodo = (todoId, todo) => {
+const regTodo = (todo) => {
   const itemWrap = document.createElement("div"); //一番外の白枠
   const item = document.createElement("div"); //完了ボタンとTodoの枠(枠なし)
   const doneBtn = document.createElement("button"); //完了ボタン
@@ -51,7 +42,7 @@ const regTodo = (todoId, todo) => {
   itemWrap.className = "itemWrap";
   item.className = "item";
   todoTitle.className = "todoTitle";
-  todoTitle.id = `${idPrefix}${todoId}`;
+  todoTitle.id = todo;
   doneBtn.className = "doneBtn fas fa-check";
 
   //完了ボタンのイベントリスナー
@@ -61,20 +52,34 @@ const regTodo = (todoId, todo) => {
     toggleDefaultMsg(todoList.childElementCount);
   });
 
-  todoTitle.innerHTML = todo.value;
+  todoTitle.innerHTML = todo;
   item.appendChild(doneBtn);
   item.appendChild(todoTitle);
   itemWrap.appendChild(item);
   todoList.appendChild(itemWrap);
-  todo.value = ""; //テキストボックスを空にする
+  textBox.value = ""; //テキストボックスを空にする
   toggleDefaultMsg(todoList.childElementCount);
 };
+
+//ローカルストレージのキーを取得
+//デフォルトで入っているrunningと__test__は除外(codesandbox特有？）
+//画面自動更新時に"CodeSandboxApp/sandbox/~~~"という値が入ってくる。必要であれば除外
+const extKeys = Object.keys(localStorage).filter((item) => {
+  return item !== "running" && item !== "__test__";
+});
+
+////main////
+
+//ローカルストレージの内容をtodoListに表示
+for (let i = 0; i < extKeys.length; i++) {
+  console.log(extKeys[i]);
+  regTodo(extKeys[i]);
+}
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
   const todo = document.getElementById("todo");
-  localStorage.setItem(`${idPrefix}${todoId}`, todo.value);
-  todoId += 1;
+  localStorage.setItem(`${todo.value}`, "comment");
 
   console.log(localStorage.length);
   // console.log(localStorage.length);
@@ -83,5 +88,6 @@ button.addEventListener("click", () => {
     alert("Todoが入力されていません!");
     return 0;
   }
-  regTodo(todoId, todo);
+
+  regTodo(todo.value);
 });
