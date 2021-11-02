@@ -10,7 +10,6 @@ const textBox = document.getElementById("todo");
 console.log("===========================================");
 
 //todo重複チェック:localStorageのキーにtodo名を使用しているので画面とズレる可能性があるため制限
-const checkDuplicate = (extKeys, todo) => {};
 
 //todo数チェック:todoの数が0のとき登録を促すメッセージを表示する
 const toggleDefaultMsg = (todos) => {
@@ -21,16 +20,6 @@ const toggleDefaultMsg = (todos) => {
     defaultMsg.style.display = "none";
     msgArea.style.display = "none";
   }
-};
-
-//todoの完了関数:todoListとlocalStorageからtodoを削除
-const doneTasks = (doneBtn) => {
-  const chosenTodo = doneBtn.nextElementSibling;
-  console.log(chosenTodo.textContent);
-  const chosenTask = doneBtn.closest(".itemWrap");
-  console.log(chosenTask);
-  todoList.removeChild(chosenTask);
-  localStorage.removeItem(chosenTodo.textContent);
 };
 
 //todoの追加関数:todoListとlocalStorageにtodoを追加
@@ -47,10 +36,10 @@ const regTodo = (todo) => {
   todoTitle.className = "todoTitle";
   doneBtn.className = "doneBtn fas fa-check";
 
-  //完了ボタンのイベントリスナー:todo削除関数とtodo数チェックを実行
-  doneBtn.addEventListener("click", (e) => {
-    // e.preventDefault();
-    doneTasks(doneBtn);
+  //完了ボタンのイベントリスナー:todoの削除とtodo数チェックを実行
+  doneBtn.addEventListener("click", () => {
+    localStorage.removeItem(todo);
+    displayUpdate();
     toggleDefaultMsg(todoList.childElementCount);
   });
 
@@ -68,11 +57,19 @@ const regTodo = (todo) => {
 //画面自動更新時に"CodeSandboxApp/sandbox/~~~"という値が入ってくる。必要であれば除外
 
 //ローカルストレージの内容をtodoListに表示
-const displayTodo = () => {
+const displayUpdate = () => {
+  // 既存の要素を削除
+  const list = document.getElementById("lists");
+  while (list.lastChild) {
+    list.removeChild(list.lastChild);
+  }
+
+  //localStorageからtodoを取得
   let extKeys = Object.keys(localStorage).filter((item) => {
     return item !== "running" && item !== "__test__";
   });
 
+  //表示
   for (let i = 0; i < extKeys.length; i++) {
     console.log(extKeys[i]);
     regTodo(extKeys[i]);
@@ -81,7 +78,7 @@ const displayTodo = () => {
 
 ////main////
 
-displayTodo();
+displayUpdate();
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
@@ -96,7 +93,12 @@ button.addEventListener("click", () => {
     return 0;
   }
   localStorage.setItem(todo.value, "comment");
-  displayTodo();
+  // console.log(list);
+  // while (list.lastChild) {
+  //   list.removeChild(list.lastChild);
+  // }
+
+  displayUpdate();
   // console.log(localStorage.length);
   // console.log(localStorage.length);
 
