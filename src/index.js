@@ -9,45 +9,47 @@ const textBox = document.getElementById("todo");
 
 console.log("===========================================");
 
-//todoの数が0のとき登録を促すメッセージを表示する
+//todo重複チェック:localStorageのキーにtodo名を使用しているので画面とズレる可能性があるため制限
+const checkDuplicate = (extKeys, todo) => {};
+
+//todo数チェック:todoの数が0のとき登録を促すメッセージを表示する
 const toggleDefaultMsg = (todos) => {
   if (todos === 0) {
     defaultMsg.style.display = "";
     msgArea.style.display = "";
-    console.log("zero");
   } else {
     defaultMsg.style.display = "none";
     msgArea.style.display = "none";
-    console.log("no zero");
   }
 };
 
-//todoの削除関数(完了ボタンで発火)
+//todoの完了関数:todoListとlocalStorageからtodoを削除
 const doneTasks = (doneBtn) => {
   const chosenTodo = doneBtn.nextElementSibling;
-  console.log(chosenTodo.id);
+  console.log(chosenTodo.textContent);
   const chosenTask = doneBtn.closest(".itemWrap");
   console.log(chosenTask);
   todoList.removeChild(chosenTask);
-  //todoTitleのidを取得して、それをキーとするLocalStorageの値を削除する
+  localStorage.removeItem(chosenTodo.textContent);
 };
 
-//todoの追加
+//todoの追加関数:todoListとlocalStorageにtodoを追加
 const regTodo = (todo) => {
-  const itemWrap = document.createElement("div"); //一番外の白枠
-  const item = document.createElement("div"); //完了ボタンとTodoの枠(枠なし)
-  const doneBtn = document.createElement("button"); //完了ボタン
-  const todoTitle = document.createElement("div"); //Todoの内容
+  //必要なHTML要素を作成
+  const itemWrap = document.createElement("div");
+  const item = document.createElement("div");
+  const doneBtn = document.createElement("button");
+  const todoTitle = document.createElement("div");
 
+  //css用のクラスを付与
   itemWrap.className = "itemWrap";
   item.className = "item";
   todoTitle.className = "todoTitle";
-  todoTitle.id = todo;
   doneBtn.className = "doneBtn fas fa-check";
 
-  //完了ボタンのイベントリスナー
+  //完了ボタンのイベントリスナー:todo削除関数とtodo数チェックを実行
   doneBtn.addEventListener("click", (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     doneTasks(doneBtn);
     toggleDefaultMsg(todoList.childElementCount);
   });
@@ -64,30 +66,41 @@ const regTodo = (todo) => {
 //ローカルストレージのキーを取得
 //デフォルトで入っているrunningと__test__は除外(codesandbox特有？）
 //画面自動更新時に"CodeSandboxApp/sandbox/~~~"という値が入ってくる。必要であれば除外
-const extKeys = Object.keys(localStorage).filter((item) => {
-  return item !== "running" && item !== "__test__";
-});
+
+//ローカルストレージの内容をtodoListに表示
+const displayTodo = () => {
+  let extKeys = Object.keys(localStorage).filter((item) => {
+    return item !== "running" && item !== "__test__";
+  });
+
+  for (let i = 0; i < extKeys.length; i++) {
+    console.log(extKeys[i]);
+    regTodo(extKeys[i]);
+  }
+};
 
 ////main////
 
-//ローカルストレージの内容をtodoListに表示
-for (let i = 0; i < extKeys.length; i++) {
-  console.log(extKeys[i]);
-  regTodo(extKeys[i]);
-}
+displayTodo();
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
+  //todoをlocalStorageに追加
+  //localStorageの内容を画面に反映
+  //todoをlocalStorageから削除
+  //localStorageの内容を画面に反映
   const todo = document.getElementById("todo");
-  localStorage.setItem(`${todo.value}`, "comment");
-
-  console.log(localStorage.length);
-  // console.log(localStorage.length);
   //テキストボックスに何も入っていない状態で追加ボタンが押されたらアラートを表示して追加しない
   if (todo.value === "") {
     alert("Todoが入力されていません!");
     return 0;
   }
+  localStorage.setItem(todo.value, "comment");
+  displayTodo();
+  // console.log(localStorage.length);
+  // console.log(localStorage.length);
 
-  regTodo(todo.value);
+  // console.log(extKeys.findIndex((key) => key === todo.value));
+  // console.log(extKeys);
+  // regTodo(todo.value);
 });
