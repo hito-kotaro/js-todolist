@@ -39,7 +39,7 @@ const regTodo = (todo) => {
   //完了ボタンのイベントリスナー:todoの削除とtodo数チェックを実行
   doneBtn.addEventListener("click", () => {
     localStorage.removeItem(todo);
-    displayUpdate();
+    displayUpdate(getLocalStorageKeys());
     toggleDefaultMsg(todoList.childElementCount);
   });
 
@@ -52,57 +52,61 @@ const regTodo = (todo) => {
   toggleDefaultMsg(todoList.childElementCount);
 };
 
-//ローカルストレージのキーを取得
-//デフォルトで入っているrunningと__test__は除外(codesandbox特有？）
-//画面自動更新時に"CodeSandboxApp/sandbox/~~~"という値が入ってくる。必要であれば除外
-
-//ローカルストレージの内容をtodoListに表示
-const displayUpdate = () => {
-  // 既存の要素を削除
+//ローカルストレージの内容をtodoListに反映
+const displayUpdate = (keys) => {
+  // 画面上のtodoを削除
   const list = document.getElementById("lists");
   while (list.lastChild) {
     list.removeChild(list.lastChild);
   }
 
-  //localStorageからtodoを取得
-  let extKeys = Object.keys(localStorage).filter((item) => {
-    return item !== "running" && item !== "__test__";
-  });
-
   //表示
-  for (let i = 0; i < extKeys.length; i++) {
-    console.log(extKeys[i]);
-    regTodo(extKeys[i]);
+  for (let i = 0; i < keys.length; i++) {
+    console.log(keys[i]);
+    regTodo(keys[i]);
   }
+};
+
+//入力値チェック
+const inputCheck = (todo, keys) => {
+  let msg = null;
+
+  if (todo.value === "") {
+    msg = "Todoが入力されていません!";
+  } else if (keys.includes(todo.value)) {
+    msg = "Todoが重複しています!";
+  }
+  return msg;
+};
+
+//localStorageからtodoを取得:todoとは関係ないものは除外
+const getLocalStorageKeys = () => {
+  let keys = Object.keys(localStorage).filter((item) => {
+    return (
+      item !== "running" &&
+      item !== "__test__" &&
+      item !== "CodeSandboxApp/sandboxes/veg7e"
+    );
+  });
+  console.log(keys);
+  return keys;
 };
 
 ////main////
 
-displayUpdate();
+//初回のlocalStorageを読み込み
+displayUpdate(getLocalStorageKeys());
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
-  //todoをlocalStorageに追加
-  //localStorageの内容を画面に反映
-  //todoをlocalStorageから削除
-  //localStorageの内容を画面に反映
   const todo = document.getElementById("todo");
-  //テキストボックスに何も入っていない状態で追加ボタンが押されたらアラートを表示して追加しない
-  if (todo.value === "") {
-    alert("Todoが入力されていません!");
-    return 0;
+  const msg = inputCheck(todo, getLocalStorageKeys());
+
+  //エラーメッセージがnullならtodoをlocalStorageに追加する
+  if (msg === null) {
+    localStorage.setItem(todo.value, "comment");
+    displayUpdate(getLocalStorageKeys());
+  } else {
+    alert(msg);
   }
-  localStorage.setItem(todo.value, "comment");
-  // console.log(list);
-  // while (list.lastChild) {
-  //   list.removeChild(list.lastChild);
-  // }
-
-  displayUpdate();
-  // console.log(localStorage.length);
-  // console.log(localStorage.length);
-
-  // console.log(extKeys.findIndex((key) => key === todo.value));
-  // console.log(extKeys);
-  // regTodo(todo.value);
 });
