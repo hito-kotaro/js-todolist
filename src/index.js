@@ -6,6 +6,7 @@ const todoList = document.getElementById("lists");
 const defaultMsg = document.getElementById("defaultMsg");
 const msgArea = document.getElementById("msgArea");
 const textBox = document.getElementById("todo");
+const textArea = document.getElementById("comment");
 
 console.log("===========================================");
 
@@ -22,17 +23,19 @@ const toggleDefaultMsg = (todos) => {
 };
 
 //todoの追加関数:todoListとlocalStorageにtodoを追加
-const regTodo = (todo) => {
+const regTodo = (todo, comment) => {
   //必要なHTML要素を作成
   const itemWrap = document.createElement("div");
   const item = document.createElement("div");
   const doneBtn = document.createElement("button");
   const todoTitle = document.createElement("div");
+  const commentWrap = document.createElement("div");
 
   //css用のクラスを付与
   itemWrap.className = "itemWrap";
   item.className = "item";
   todoTitle.className = "todoTitle";
+  commentWrap.className = "comment";
   doneBtn.className = "doneBtn fas fa-check";
 
   //完了ボタンのイベントリスナー:todoの削除とtodo数チェックを実行
@@ -43,11 +46,14 @@ const regTodo = (todo) => {
   });
 
   todoTitle.innerHTML = todo;
+  commentWrap.innerHTML = comment;
   item.appendChild(doneBtn);
   item.appendChild(todoTitle);
+  item.appendChild(commentWrap);
   itemWrap.appendChild(item);
   todoList.appendChild(itemWrap);
   textBox.value = ""; //テキストボックスを空にする
+  textArea.value = "";
   toggleDefaultMsg(todoList.childElementCount);
 };
 
@@ -62,7 +68,7 @@ const displayUpdate = (keys) => {
   //表示
   for (let i = 0; i < keys.length; i++) {
     console.log(keys[i]);
-    regTodo(keys[i]);
+    regTodo(keys[i], localStorage.getItem(keys));
   }
 };
 
@@ -98,12 +104,11 @@ displayUpdate(getLocalStorageKeys());
 
 // 追加ボタンを押した時のアクション
 button.addEventListener("click", () => {
-  const todo = document.getElementById("todo");
-  const msg = inputCheck(todo, getLocalStorageKeys());
+  const msg = inputCheck(textBox, getLocalStorageKeys());
 
   //エラーメッセージがnullならtodoをlocalStorageに追加する
   if (msg === null) {
-    localStorage.setItem(todo.value, "comment");
+    localStorage.setItem(textBox.value, textArea.value);
     displayUpdate(getLocalStorageKeys());
   } else {
     alert(msg);
