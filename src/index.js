@@ -10,7 +10,6 @@ const textBox = document.getElementById("todo");
 console.log("===========================================");
 
 //todo重複チェック:localStorageのキーにtodo名を使用しているので画面とズレる可能性があるため制限
-
 //todo数チェック:todoの数が0のとき登録を促すメッセージを表示する
 const toggleDefaultMsg = (todos) => {
   if (todos === 0) {
@@ -85,7 +84,7 @@ const getLocalStorageKeys = () => {
     return (
       item !== "running" &&
       item !== "__test__" &&
-      item !== "CodeSandboxApp/sandboxes/veg7e"
+      item.indexOf("CodeSandboxApp/sandboxes/") === -1
     );
   });
   console.log(keys);
