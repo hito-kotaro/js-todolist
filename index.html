@@ -21,13 +21,19 @@
       <div id="register">
         <!-- <input id="regBtn" type="button" value="Todoを追加" /> -->
         <button id="regBtn" class="fas fa-plus"></button>
-        <input id="todo" type="text" placeholder="" />
+        <input id="todo" type="text" maxlength="15" placeholder="ここにTodo" />
+        <textarea
+          name="comment"
+          id="comment"
+          maxlength="50"
+          cols="30"
+          rows="5"
+          placeholder="ここにコメント"
+        ></textarea>
       </div>
 
       <div id="msgArea">
-        <div id="defaultMsg">
-          Let's Register Todo <i class="fas fa-child"></i>
-        </div>
+        <div id="defaultMsg">Let's Todo <i class="fas fa-child"></i></div>
       </div>
 
       <div id="lists">

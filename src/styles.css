@@ -1,12 +1,8 @@
-html {
-  /* background-color: #000000; */
-  background-image: url("./../img/bg.png");
-  background-size: cover;
-}
-
 body {
   font-family: sans-serif;
   margin: 0;
+  background: linear-gradient(45deg, #464646, #000000);
+  height: 100vh;
 }
 
 h1 {
@@ -46,7 +42,7 @@ main {
 #register {
   /* background-color: green; */
   display: flex;
-  width: 60%;
+  width: 90%;
   height: 50px;
   margin: 10px auto;
   backdrop-filter: blur(3px);
@@ -61,7 +57,7 @@ main {
 }
 
 #todo {
-  width: 70%;
+  width: 40%;
   overflow: hidden;
   font-size: 24px;
   color: #ffffff;
@@ -75,11 +71,27 @@ main {
   border-bottom: solid 3px #ffffff;
 }
 
+#comment {
+  width: 60%;
+  overflow: hidden;
+  font-size: 12px;
+  color: #ffffff;
+  resize: none;
+  margin-bottom: 5px;
+  margin-left: 15px;
+  background-color: transparent;
+  border: none;
+  border-bottom: solid 3px #ffffff;
+}
+
 #todo:focus {
   outline: none;
 }
 
-/* Todoè¡¨ç¤ºç®‡æ‰€ */
+#comment:focus {
+  outline: none;
+}
+
 #lists {
   margin-top: 30px;
   /* background-color: red; */
@@ -109,9 +121,20 @@ main {
 
 .todoTitle {
   /* background-color: blue; */
+  width: 30%;
+  overflow: hidden;
+  font-size: 16px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.comment {
   width: 70%;
   overflow: hidden;
-  font-size: 24px;
+  font-size: 12px;
   color: #ffffff;
   display: flex;
   justify-content: center;
